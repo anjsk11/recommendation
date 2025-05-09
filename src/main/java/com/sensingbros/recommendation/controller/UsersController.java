@@ -31,6 +31,5 @@ public class UsersController {
         UsersDto savedUser = userService.saveUser(userDto);
         return ResponseEntity.ok(savedUser);
     }
-    //test
 }
 
