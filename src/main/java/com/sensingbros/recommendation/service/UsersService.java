@@ -21,7 +21,7 @@ public class UsersService {
 
     // id로 User 조회 후 UserDto로 변환하여 반환
     public UsersDto getUser(Integer id) {
-        // 실제 DB에서 유저 엔티티 조회 (예시로 간단히 생성)
+        // 실제 DB 유저 엔티티 조회 (예시로 간단히 생성)
         Users user = new Users();
         user.setId(id);
 
@@ -40,37 +40,3 @@ public class UsersService {
         return usersMapper.toDto(savedUser);  // 엔티티를 DTO로 변환하여 반환
     }
 }
-
-//import java.util.List;
-//import java.util.stream.Collectors;
-//
-//@Service
-//public class UsersService {
-//
-//    @Autowired
-//    private UsersRepository usersRepository;
-//
-//    public void saveUser(UsersDto dto) {
-//        Users entity = dtoToEntity(dto);         // DTO → Entity
-//        usersRepository.save(entity);
-//    }
-//
-//    public List<UsersDto> getAllUsers() {
-//        List<Users> users = usersRepository.findAll();
-//        return users.stream()
-//                .map(this::entityToDto)          // Entity → DTO
-//                .collect(Collectors.toList());
-//    }
-//
-//    private Users dtoToEntity(UsersDto dto) {
-//        Users user = new Users();
-//        user.setId(dto.getId());
-//        return user;
-//    }
-//
-//    private UsersDto entityToDto(Users entity) {
-//        UsersDto dto = new UsersDto();
-//        dto.setId(entity.getId());
-//        return dto;
-//    }
-//}
