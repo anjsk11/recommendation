@@ -1,10 +1,7 @@
 package com.sensingbros.recommendation.controller;
 
 import com.sensingbros.recommendation.dto.UsersDto;
-import com.sensingbros.recommendation.entity.Users;
-import com.sensingbros.recommendation.repository.UsersRepository;
 import com.sensingbros.recommendation.service.UsersService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,24 +31,6 @@ public class UsersController {
         UsersDto savedUser = userService.saveUser(userDto);
         return ResponseEntity.ok(savedUser);
     }
+    //test
 }
 
-//import java.util.List;
-//
-//@RestController
-//@RequestMapping("/users")
-//public class UsersController {
-//
-//    @Autowired
-//    private UsersRepository usersRepository;
-//
-//    // 테스트용 insert API
-//    @GetMapping("/test")
-//    public List<Users> testInsert() {
-//        Users user = new Users();
-//        user.setId(1);  // 수동 ID
-//        usersRepository.save(user);
-//
-//        return usersRepository.findAll(); // 저장된 모든 사용자 반환
-//    }
-//}
