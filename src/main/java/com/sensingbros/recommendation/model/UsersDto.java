@@ -1,4 +1,4 @@
-package com.sensingbros.recommendation.dto;
+package com.sensingbros.recommendation.model;
 import lombok.Getter;
 import lombok.Setter;
 

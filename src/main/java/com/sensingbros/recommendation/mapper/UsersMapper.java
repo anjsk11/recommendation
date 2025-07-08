@@ -1,6 +1,6 @@
 package com.sensingbros.recommendation.mapper;
-import com.sensingbros.recommendation.dto.UsersDto;
-import com.sensingbros.recommendation.entity.Users;
+import com.sensingbros.recommendation.model.UsersDto;
+import com.sensingbros.recommendation.domain.Users;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 

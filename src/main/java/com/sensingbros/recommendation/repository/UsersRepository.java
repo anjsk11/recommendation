@@ -1,6 +1,6 @@
 package com.sensingbros.recommendation.repository;
 
-import com.sensingbros.recommendation.entity.Users;
+import com.sensingbros.recommendation.domain.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UsersRepository extends JpaRepository<Users, Integer> {
