@@ -7,6 +7,9 @@ import com.sensingbros.recommendation.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
 public class UsersService {
 
@@ -38,5 +41,11 @@ public class UsersService {
 
         // 저장된 엔티티를 DTO로 변환하여 반환
         return usersMapper.toDto(savedUser);  // 엔티티를 DTO로 변환하여 반환
+    }
+
+    // DB에서 데이터를 받아와 UsersDTO로 변환
+    public Optional<UsersDTO> getUserById(UUID id) {
+        return usersRepository.findById(id)
+                .map(usersMapper::toDto);
     }
 }
