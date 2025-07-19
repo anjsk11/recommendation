@@ -1,7 +1,7 @@
 package com.sensingbros.recommendation.rest;
 
-import com.sensingbros.recommendation.domain.Users;
 import com.sensingbros.recommendation.model.UsersDTO;
+import com.sensingbros.recommendation.model.TFResponseDTO;
 import com.sensingbros.recommendation.service.UsersService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +21,14 @@ public class UsersController {
 
     // POST 요청: UserDto 저장
     @PostMapping
-    public ResponseEntity<UsersDTO> saveUser(@RequestBody UsersDTO userDto) {
-        // UserDto를 저장하고 결과 UserDto 반환
-        UsersDTO savedUser = userService.saveUser(userDto);
-        return ResponseEntity.ok(savedUser);
+    public ResponseEntity<TFResponseDTO> syncUser(@RequestBody UsersDTO userDto) {
+        try {
+            // UserDto를 저장하고 결과 UserDto 반환
+            userService.syncUser(userDto);
+            return ResponseEntity.ok(new TFResponseDTO(true));
+        }catch (Exception e) {
+            return ResponseEntity.ok(new TFResponseDTO(false));
+        }
     }
 
     // id로 users 정보 가져오기 (name, email)

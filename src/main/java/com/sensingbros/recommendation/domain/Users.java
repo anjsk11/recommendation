@@ -25,15 +25,7 @@ public class Users {
 
     @Id
     @Column(nullable = false, updatable = false)
-    @GeneratedValue
-    @UuidGenerator
     private UUID id;
-
-    @Column(nullable = false, length = 100)
-    private String name;
-
-    @Column(nullable = false, unique = true)
-    private String email;
 
     @Column(insertable = false, updatable = false)
     private OffsetDateTime createdAt;

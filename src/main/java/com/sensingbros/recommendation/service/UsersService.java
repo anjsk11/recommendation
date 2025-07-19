@@ -32,15 +32,20 @@ public class UsersService {
 //        return usersMapper.toDto(user);
 //    }
 
+//    public void syncUser(UUID id) {
+//        if (!usersRepository.existsById(id)) {
+//            Users user = new Users();
+//            usersRepository.save(user);
+//        }
+//    }
+
     // UserDto를 User 엔티티로 변환하여 저장 (예시로 DB에 저장)
-    public UsersDTO saveUser(UsersDTO userDto) {
+    public void syncUser(UsersDTO userDto) {
         // UserDto → User 엔티티로 변환
         Users user = usersMapper.toEntity(userDto);
+        UUID id = userDto.getId(); // userDto 안의 id 가져오기
 
-        Users savedUser = usersRepository.save(user);  // DB에 저장
-
-        // 저장된 엔티티를 DTO로 변환하여 반환
-        return usersMapper.toDto(savedUser);  // 엔티티를 DTO로 변환하여 반환
+        if (!usersRepository.existsById(id)) { usersRepository.save(user); }  // DB에 저장
     }
 
     // DB에서 데이터를 받아와 UsersDTO로 변환
