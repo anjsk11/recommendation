@@ -53,4 +53,8 @@ public class UsersService {
         return usersRepository.findById(id)
                 .map(usersMapper::toDto);
     }
+
+    public void deleteUserById(UUID id) {
+        usersRepository.deleteById(id);
+    }
 }

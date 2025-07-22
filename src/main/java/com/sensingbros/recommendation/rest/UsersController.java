@@ -4,6 +4,8 @@ import com.sensingbros.recommendation.model.UsersDTO;
 import com.sensingbros.recommendation.model.TFResponseDTO;
 import com.sensingbros.recommendation.service.UsersService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -37,5 +39,16 @@ public class UsersController {
         return userService.getUserById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/me")
+    public ResponseEntity<TFResponseDTO> deleteMyAccount(@AuthenticationPrincipal Jwt jwt) {
+//        try {
+            UUID userId = UUID.fromString(jwt.getClaimAsString("sub"));
+            userService.deleteUserById(userId);
+            return ResponseEntity.ok(new TFResponseDTO(true));
+//        }catch (Exception e) {
+//            return ResponseEntity.ok(new TFResponseDTO(false));
+//        }
     }
 }
