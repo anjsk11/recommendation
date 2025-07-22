@@ -20,6 +20,7 @@ import org.hibernate.type.SqlTypes;
 @Entity
 @Getter
 @Setter
+@DynamicUpdate
 public class Users {
 
     @Id

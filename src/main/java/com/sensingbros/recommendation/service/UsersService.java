@@ -4,6 +4,9 @@ import com.sensingbros.recommendation.model.UsersDTO;
 import com.sensingbros.recommendation.domain.Users;
 import com.sensingbros.recommendation.mapper.UsersMapper;
 import com.sensingbros.recommendation.repository.UsersRepository;
+import com.sensingbros.recommendation.util.HeatmapUtils;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,5 +59,22 @@ public class UsersService {
 
     public void deleteUserById(UUID id) {
         usersRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void updateUserHeatmap(UUID userId, double lat, double lng) {
+        Users user = usersRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Integer[][] heatmap = user.getHeatmap();
+
+        int[] index = HeatmapUtils.getGridIndex(lat, lng);
+        int row = index[0];
+        int col = index[1];
+
+        heatmap[row][col] = heatmap[row][col] + 1;
+
+        user.setHeatmap(heatmap);  // @DynamicUpdate로 변경 부분만 갱신됨
+        usersRepository.save(user);
     }
 }
