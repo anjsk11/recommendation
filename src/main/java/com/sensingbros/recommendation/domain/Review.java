@@ -26,10 +26,10 @@ public class Review {
     @Column(columnDefinition = "text")
     private String body;
 
-    @Column
+    @Column(insertable = false, updatable = false)
     private OffsetDateTime createdAt;
 
-    @Column
+    @Column(insertable = false, updatable = false)
     private OffsetDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)

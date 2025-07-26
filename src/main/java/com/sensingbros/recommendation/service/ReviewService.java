@@ -45,8 +45,8 @@ public class ReviewService {
         reviewRepository.save(review);
     }
 
-    public List<ReviewResponseDTO> getReviewByUserId(UUID id) {
-
-    }
+//    public List<ReviewResponseDTO> getReviewByUserId(UUID id) {
+//
+//    }
 
 }
