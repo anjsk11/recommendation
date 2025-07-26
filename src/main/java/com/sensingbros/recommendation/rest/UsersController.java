@@ -24,10 +24,10 @@ public class UsersController {
 
     // POST 요청: UserDto 저장
     @PostMapping
-    public ResponseEntity<TFResponseDTO> syncUser(@RequestBody UsersDTO userDto) {
+    public ResponseEntity<TFResponseDTO> syncUser(@AuthenticationPrincipal Jwt jwt) {
         try {
-            // UserDto를 저장하고 결과 UserDto 반환
-            userService.syncUser(userDto);
+            UUID userId = UUID.fromString(jwt.getClaimAsString("sub"));
+            userService.syncUser(userId);
             return ResponseEntity.ok(new TFResponseDTO(true));
         }catch (Exception e) {
             return ResponseEntity.ok(new TFResponseDTO(false));
