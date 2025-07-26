@@ -43,11 +43,11 @@ public class UsersService {
 //    }
 
     // UserDto를 User 엔티티로 변환하여 저장 (예시로 DB에 저장)
-    public void syncUser(UUID userId) {
-        if (!usersRepository.existsById(userId)) {
+    public void syncUser(UUID id) {
+        if (!usersRepository.existsById(id)) {
             // UserDto → User 엔티티로 변환
             Users user = new Users();
-            user.setId(userId); // userDto 안의 id 가져오기
+            user.setId(id); // userDto 안의 id 가져오기
             usersRepository.save(user);  // DB에 저장
         }
     }

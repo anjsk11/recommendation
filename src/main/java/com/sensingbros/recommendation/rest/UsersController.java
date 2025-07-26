@@ -1,7 +1,7 @@
 package com.sensingbros.recommendation.rest;
 
 import com.sensingbros.recommendation.model.UsersDTO;
-import com.sensingbros.recommendation.model.TFResponseDTO;
+import com.sensingbros.recommendation.model.ResponseDTO;
 import com.sensingbros.recommendation.model.GpsDTO;
 import com.sensingbros.recommendation.service.UsersService;
 import org.springframework.http.ResponseEntity;
@@ -24,13 +24,13 @@ public class UsersController {
 
     // POST 요청: UserDto 저장
     @PostMapping
-    public ResponseEntity<TFResponseDTO> syncUser(@AuthenticationPrincipal Jwt jwt) {
+    public ResponseEntity<ResponseDTO> syncUser(@AuthenticationPrincipal Jwt jwt) {
         try {
             UUID userId = UUID.fromString(jwt.getClaimAsString("sub"));
             userService.syncUser(userId);
-            return ResponseEntity.ok(new TFResponseDTO(true));
+            return ResponseEntity.ok(new ResponseDTO(true));
         }catch (Exception e) {
-            return ResponseEntity.ok(new TFResponseDTO(false));
+            return ResponseEntity.ok(new ResponseDTO(false));
         }
     }
 
@@ -43,26 +43,26 @@ public class UsersController {
     }
 
     @DeleteMapping("/me")
-    public ResponseEntity<TFResponseDTO> deleteMyAccount(@AuthenticationPrincipal Jwt jwt) {
+    public ResponseEntity<ResponseDTO> deleteMyAccount(@AuthenticationPrincipal Jwt jwt) {
 //        try {
             UUID userId = UUID.fromString(jwt.getClaimAsString("sub"));
             userService.deleteUserById(userId);
-            return ResponseEntity.ok(new TFResponseDTO(true));
+            return ResponseEntity.ok(new ResponseDTO(true));
 //        }catch (Exception e) {
 //            return ResponseEntity.ok(new TFResponseDTO(false));
 //        }
     }
 
     @PostMapping("/me/heatmap")
-    public ResponseEntity<TFResponseDTO> mapGps(@RequestBody GpsDTO gpsDto, @AuthenticationPrincipal Jwt jwt) {
+    public ResponseEntity<ResponseDTO> mapGps(@RequestBody GpsDTO gpsDto, @AuthenticationPrincipal Jwt jwt) {
         try {
             UUID userId = UUID.fromString(jwt.getClaimAsString("sub"));
             double latitude = gpsDto.getLatitude();
             double longitude = gpsDto.getLongitude();
             userService.updateUserHeatmap(userId, latitude, longitude);
-            return ResponseEntity.ok(new TFResponseDTO(true));
+            return ResponseEntity.ok(new ResponseDTO(true));
         }catch (Exception e) {
-            return ResponseEntity.ok(new TFResponseDTO(false));
+            return ResponseEntity.ok(new ResponseDTO(false));
         }
     }
 
