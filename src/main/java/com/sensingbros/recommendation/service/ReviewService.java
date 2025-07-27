@@ -10,10 +10,12 @@ import com.sensingbros.recommendation.repository.ReviewRepository;
 import com.sensingbros.recommendation.repository.UsersRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewService {
@@ -45,8 +47,33 @@ public class ReviewService {
         reviewRepository.save(review);
     }
 
-//    public List<ReviewResponseDTO> getReviewByUserId(UUID id) {
-//
-//    }
+    public List<ReviewResponseDTO> getReviewsByPlaceId(Integer placeId, Jwt jwt) {
+        String currentUserName = jwt.getClaimAsString("name");
+        List<Review> reviews = reviewRepository.findByPlaceId(placeId);
+
+        return reviews.stream()
+                .map(review -> new ReviewResponseDTO(
+                        review.getId(),
+                        currentUserName,
+                        review.getScore(),
+                        review.getBody()
+                ))
+                .collect(Collectors.toList());
+    }
+
+    // 부분 수정 메서드
+    public void patchReview(Integer reviewId, CreateReviewRequestDTO dto) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new RuntimeException("해당 리뷰를 찾을 수 없습니다."));
+
+        if (dto.getScore() != null) {
+            review.setScore(dto.getScore());
+        }
+        if (dto.getBody() != null) {
+            review.setBody(dto.getBody());
+        }
+
+        reviewRepository.save(review);
+    }
 
 }

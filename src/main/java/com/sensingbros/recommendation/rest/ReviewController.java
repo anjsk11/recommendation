@@ -33,4 +33,17 @@ public class ReviewController {
                     .body(new ResponseDTO<>(false, e.getMessage()));
         }
     }
+
+    // 리뷰 부분 수정 API
+    @PatchMapping("/{reviewId}")
+    public ResponseEntity<ResponseDTO<String>> patchReview(@PathVariable("reviewId") Integer reviewId, @RequestBody CreateReviewRequestDTO reviewDTO) {
+        try {
+            reviewService.patchReview(reviewId, reviewDTO);
+            return ResponseEntity.ok(new ResponseDTO<>(true));
+        } catch (RuntimeException e) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new ResponseDTO<>(false, e.getMessage()));
+        }
+    }
 }

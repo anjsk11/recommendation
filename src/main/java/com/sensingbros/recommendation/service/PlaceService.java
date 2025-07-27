@@ -25,5 +25,4 @@ public class PlaceService {
         return placeRepository.findById(placeId)
                 .map(placeMapper::toDto);
     }
-
 }
