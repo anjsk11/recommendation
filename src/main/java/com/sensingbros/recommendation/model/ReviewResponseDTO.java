@@ -1,7 +1,10 @@
 package com.sensingbros.recommendation.model;
 
+import lombok.Getter;
+
 import java.math.BigDecimal;
 
+@Getter
 public class ReviewResponseDTO {
     private Integer id;
     private String name;
