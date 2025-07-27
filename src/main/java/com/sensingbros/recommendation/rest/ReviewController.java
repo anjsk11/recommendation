@@ -36,9 +36,13 @@ public class ReviewController {
 
     // 리뷰 부분 수정 API
     @PatchMapping("/{reviewId}")
-    public ResponseEntity<ResponseDTO<String>> patchReview(@PathVariable("reviewId") Integer reviewId, @RequestBody CreateReviewRequestDTO reviewDTO) {
+    public ResponseEntity<ResponseDTO<String>> patchReview(
+            @PathVariable("reviewId") Integer reviewId,
+            @RequestBody CreateReviewRequestDTO reviewDTO,
+            @AuthenticationPrincipal Jwt jwt) {  // 인증정보 추가
         try {
-            reviewService.patchReview(reviewId, reviewDTO);
+            UUID userId = UUID.fromString(jwt.getClaimAsString("sub"));
+            reviewService.patchReview(reviewId, reviewDTO, userId);
             return ResponseEntity.ok(new ResponseDTO<>(true));
         } catch (RuntimeException e) {
             return ResponseEntity

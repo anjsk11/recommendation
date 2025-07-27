@@ -34,6 +34,7 @@ public class ReviewService {
 
     public void saveReview(CreateReviewRequestDTO reviewDTO, UUID id) {
         Review review = modelMapper.map(reviewDTO, Review.class);
+        review.setId(null);
 
         Users user = usersRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 유저"));
@@ -62,9 +63,12 @@ public class ReviewService {
     }
 
     // 부분 수정 메서드
-    public void patchReview(Integer reviewId, CreateReviewRequestDTO dto) {
+    public void patchReview(Integer reviewId, CreateReviewRequestDTO dto, UUID userId) {
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new RuntimeException("해당 리뷰를 찾을 수 없습니다."));
+        if (!review.getUser().getId().equals(userId)) {
+            throw new RuntimeException("리뷰 수정 권한이 없습니다.");
+        }
 
         if (dto.getScore() != null) {
             review.setScore(dto.getScore());
@@ -72,7 +76,6 @@ public class ReviewService {
         if (dto.getBody() != null) {
             review.setBody(dto.getBody());
         }
-
         reviewRepository.save(review);
     }
 
