@@ -4,6 +4,7 @@ import com.sensingbros.recommendation.model.UsersDTO;
 import com.sensingbros.recommendation.model.ResponseDTO;
 import com.sensingbros.recommendation.model.GpsDTO;
 import com.sensingbros.recommendation.service.UsersService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,8 +23,9 @@ public class UsersController {
     private final UsersService userService;
 
     // UserService 주입
-    public UsersController(UsersService userService) {
+    public UsersController(UsersService userService, JwtDecoder jwtDecoder) {
         this.userService = userService;
+        this.jwtDecoder = jwtDecoder;
     }
 
     // POST 요청: UserDto 저장
