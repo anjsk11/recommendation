@@ -44,7 +44,7 @@ public class ReviewController {
             UUID userId = UUID.fromString(jwt.getClaimAsString("sub"));
             reviewService.patchReview(reviewId, reviewDTO, userId);
             return ResponseEntity.ok(new ResponseDTO<>(true));
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             return ResponseEntity
                     .badRequest()
                     .body(new ResponseDTO<>(false, e.getMessage()));

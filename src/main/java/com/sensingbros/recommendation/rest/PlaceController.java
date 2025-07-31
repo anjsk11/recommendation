@@ -45,15 +45,17 @@ public class PlaceController {
     }
 
     @GetMapping("/{placeId}/reviews")
-    public ResponseDTO<List<ReviewResponseDTO>> getReviewsByPlace(
+    public ResponseEntity<ResponseDTO<?>> getReviewsByPlace(
             @PathVariable Integer placeId,
             @AuthenticationPrincipal Jwt jwt) {
         try {
             List<ReviewResponseDTO> reviews = reviewService.getReviewsByPlaceId(placeId, jwt);
-            return new ResponseDTO<>(true, reviews);
+            return ResponseEntity.ok(new ResponseDTO<List<ReviewResponseDTO>>(true, reviews));
+
         } catch (Exception e) {
             // 예외 발생 시 success_code는 false, data는 null 또는 에러 메시지로 처리
-            return new ResponseDTO<>(false);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO<String>(false, e.getMessage()));
         }
     }
 }

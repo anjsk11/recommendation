@@ -10,5 +10,5 @@ import java.util.UUID;
 @Setter
 public class UsersDTO {
     @NotNull
-    private UUID id;
+    private String idToken;
 }

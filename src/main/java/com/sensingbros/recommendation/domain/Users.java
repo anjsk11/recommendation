@@ -26,6 +26,9 @@ public class Users {
     @Id
     @Column(nullable = false, updatable = false)
     private UUID id;
+    
+    @Column(length = 100)
+    private String name;
 
     @Column(insertable = false, updatable = false)
     private OffsetDateTime createdAt;
