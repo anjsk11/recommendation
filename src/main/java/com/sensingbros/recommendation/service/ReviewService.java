@@ -49,13 +49,12 @@ public class ReviewService {
     }
 
     public List<ReviewResponseDTO> getReviewsByPlaceId(Integer placeId, Jwt jwt) {
-        String currentUserName = jwt.getClaimAsString("name");
         List<Review> reviews = reviewRepository.findByPlaceId(placeId);
 
         return reviews.stream()
                 .map(review -> new ReviewResponseDTO(
                         review.getId(),
-                        currentUserName,
+                        review.getUser().getName(),
                         review.getScore(),
                         review.getBody()
                 ))
