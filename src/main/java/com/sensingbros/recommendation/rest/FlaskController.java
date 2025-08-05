@@ -1,5 +1,6 @@
 package com.sensingbros.recommendation.rest;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.sensingbros.recommendation.service.FlaskService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +17,7 @@ public class FlaskController {
     }
 
     @GetMapping("/recommend")
-    public Mono<String> callFlask() {
+    public Mono<JsonNode> callFlask() {
         return flaskService.callFlaskRecommend();
     }
 }
