@@ -8,11 +8,13 @@ import com.sensingbros.recommendation.model.ReviewResponseDTO;
 import com.sensingbros.recommendation.repository.PlaceRepository;
 import com.sensingbros.recommendation.repository.ReviewRepository;
 import com.sensingbros.recommendation.repository.UsersRepository;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -32,6 +34,7 @@ public class ReviewService {
         this.placeRepository = placeRepository;
     }
 
+    @Transactional
     public void saveReview(CreateReviewRequestDTO reviewDTO, UUID id) {
         Review review = modelMapper.map(reviewDTO, Review.class);
         review.setId(null);
@@ -46,6 +49,14 @@ public class ReviewService {
         review.setPlace(place);
 
         reviewRepository.save(review);
+
+        // 통계 갱신
+        Integer reviewCount = reviewRepository.countByPlaceId(place.getId());
+        BigDecimal reviewAvg = reviewRepository.avgRatingByPlaceId(place.getId());
+
+        place.setScoreCount(reviewCount);
+        place.setAvgScore(reviewAvg != null ? reviewAvg : BigDecimal.valueOf(0));  // null 처리
+        placeRepository.save(place);
     }
 
     public List<ReviewResponseDTO> getReviewsByPlaceId(Integer placeId, Jwt jwt) {
