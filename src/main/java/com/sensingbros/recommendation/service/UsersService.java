@@ -1,9 +1,11 @@
 package com.sensingbros.recommendation.service;
 
+import com.sensingbros.recommendation.domain.Gps;
 import com.sensingbros.recommendation.model.UsersDTO;
 import com.sensingbros.recommendation.domain.Users;
 import com.sensingbros.recommendation.mapper.UsersMapper;
 import com.sensingbros.recommendation.repository.UsersRepository;
+import com.sensingbros.recommendation.repository.GpsRepository;
 import com.sensingbros.recommendation.util.HeatmapUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +20,13 @@ public class UsersService {
 
     private final UsersMapper usersMapper;
     private final UsersRepository usersRepository;
+    private final GpsRepository gpsRepository;
 
     @Autowired
-    public UsersService(UsersMapper usersMapper, UsersRepository usersRepository) {
+    public UsersService(UsersMapper usersMapper, UsersRepository usersRepository, GpsRepository gpsRepository) {
         this.usersMapper = usersMapper;
         this.usersRepository = usersRepository;
+        this.gpsRepository = gpsRepository;
     }
 
 //    // id로 User 조회 후 UserDto로 변환하여 반환
@@ -77,6 +81,13 @@ public class UsersService {
         heatmap[row][col] = heatmap[row][col] + 1;
 
         user.setHeatmap(heatmap);  // @DynamicUpdate로 변경 부분만 갱신됨
+
+        Gps gps = new Gps();
+        gps.setUser(user);
+        gps.setLongitude(lng);
+        gps.setLatitude(lat);
+
         usersRepository.save(user);
+        gpsRepository.save(gps);
     }
 }

@@ -44,6 +44,9 @@ public class Users {
     @OneToMany(mappedBy = "user")
     private Set<Review> reviews = new HashSet<>();
 
+    @OneToMany(mappedBy = "user")
+    private Set<Gps> Gps = new HashSet<>();
+
     public Users() {
         if (this.heatmap == null)
             initHeatmap();  // 생성자에서 초기화
