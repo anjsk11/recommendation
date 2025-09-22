@@ -37,9 +37,19 @@ public class Users {
     private OffsetDateTime updatedAt;
 
     @Convert(converter = IntArray2DConverter.class)
-    @Column(name = "heatmap", columnDefinition = "jsonb")
+    @Column(name = "morning_heatmap", columnDefinition = "jsonb")
     @JdbcTypeCode(SqlTypes.JSON)
-    private Integer[][] heatmap;
+    private Integer[][] morningHeatmap;
+
+    @Convert(converter = IntArray2DConverter.class)
+    @Column(name = "noon_heatmap", columnDefinition = "jsonb")
+    @JdbcTypeCode(SqlTypes.JSON)
+    private Integer[][] noonHeatmap;
+
+    @Convert(converter = IntArray2DConverter.class)
+    @Column(name = "night_heatmap", columnDefinition = "jsonb")
+    @JdbcTypeCode(SqlTypes.JSON)
+    private Integer[][] nightHeatmap;
 
     @OneToMany(mappedBy = "user")
     private Set<Review> reviews = new HashSet<>();
@@ -48,14 +58,22 @@ public class Users {
     private Set<Gps> Gps = new HashSet<>();
 
     public Users() {
-        if (this.heatmap == null)
-            initHeatmap();  // 생성자에서 초기화
+        if (this.morningHeatmap == null
+                || this.noonHeatmap == null
+                || this.nightHeatmap == null) {
+            initHeatmap();  // 3개 모두 초기화
+        }
     }
 
     private void initHeatmap() {
-        heatmap = new Integer[30][30];
+        morningHeatmap = new Integer[30][30];
+        noonHeatmap = new Integer[30][30];
+        nightHeatmap = new Integer[30][30];
+
         for (int i = 0; i < 30; i++) {
-            Arrays.fill(heatmap[i], 0);  // 각 행을 0으로 채움
+            Arrays.fill(morningHeatmap[i], 0);
+            Arrays.fill(noonHeatmap[i], 0);
+            Arrays.fill(nightHeatmap[i], 0);// 각 행을 0으로 채움
         }
     }
 }

@@ -16,7 +16,7 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-public class FlaskService {
+public class RecommendationService {
 
 
     private final RestTemplate restTemplate = new RestTemplate();
@@ -54,4 +54,16 @@ public class FlaskService {
         // ObjectMapper를 사용해 JSON 문자열을 Map<String, Double>로 직접 변환
         return objectMapper.readValue(jsonResponse, new TypeReference<Map<String, Double>>() {});
     }
+
+    // 히트맵 활용 함수
+
+
+    // 예측 평점과 히트맵 점수를 합친 후 정렬, 이후 상위 20개 장소 리턴
+
+
+    // 아침 점심 저녁 히트맵으로 나눠서 시점별로 추천
+    
+
+    // 히트맵 시각화
+
 }

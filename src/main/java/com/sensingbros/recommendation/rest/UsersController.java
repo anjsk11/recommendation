@@ -29,7 +29,7 @@ public class UsersController {
     }
 
     // POST 요청: UserDto 저장
-    @PostMapping
+    @PostMapping("/sync")
     public ResponseEntity<ResponseDTO<String>> syncUser(@RequestBody UsersDTO usersDTO, @AuthenticationPrincipal Jwt jwt) {
         try {
             UUID userId = UUID.fromString(jwt.getClaimAsString("sub"));
@@ -85,6 +85,17 @@ public class UsersController {
             userService.updateUserHeatmap(userId, latitude, longitude);
             return ResponseEntity.ok(new ResponseDTO<>(true));
         }catch (Exception e) {
+            return ResponseEntity.ok(new ResponseDTO<>(false, e.getMessage()));
+        }
+    }
+
+    @GetMapping("/me/heatmap")
+    public ResponseEntity<ResponseDTO<?>> getHeatmap(@AuthenticationPrincipal Jwt jwt) {
+        try {
+            UUID userId = UUID.fromString(jwt.getClaimAsString("sub"));
+            Integer[][] heatmap = userService.getCombinedHeatmap(userId);
+            return ResponseEntity.ok(new ResponseDTO<>(true, heatmap));
+        } catch (Exception e) {
             return ResponseEntity.ok(new ResponseDTO<>(false, e.getMessage()));
         }
     }
