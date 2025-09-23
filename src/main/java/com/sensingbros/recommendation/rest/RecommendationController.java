@@ -1,15 +1,16 @@
 package com.sensingbros.recommendation.rest;
 
+import com.sensingbros.recommendation.domain.Place;
 import com.sensingbros.recommendation.model.ResponseDTO;
 import com.sensingbros.recommendation.service.RecommendationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.oauth2.jwt.Jwt;
 
-import java.util.Map;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -21,25 +22,15 @@ public class RecommendationController {
         this.recommendationService = recommendationService;
     }
 
-    @PostMapping("/me/recommend")
-    public ResponseEntity<?> recommend(@AuthenticationPrincipal Jwt jwt) {
+    @GetMapping("/me/recommend")
+    public ResponseEntity<ResponseDTO<?>> getRecommendations(@AuthenticationPrincipal Jwt jwt) {
         try {
             UUID userId = UUID.fromString(jwt.getClaimAsString("sub"));
-
-            // FlaskService 호출: 추천 결과를 Map<String, Double> 형태로 받음
-            Map<String, Double> recommendations = recommendationService.getRecommendationFromFlask(userId);
-
-            // 성공 응답 생성
-            ResponseDTO<Map<String, Double>> responseDto =
-                    new ResponseDTO<>(true, recommendations);
-            return ResponseEntity.ok(responseDto);
+            List<Place> recommendedPlaces = recommendationService.getTop20IdsByCombinedScore(userId);
+            return ResponseEntity.ok(new ResponseDTO<>(true, recommendedPlaces));
         } catch (Exception e) {
-            // 실패 응답 생성
-            ResponseDTO<String> errorDto = new ResponseDTO<>(false, e.getMessage());
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(errorDto);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO<>(false, e.getMessage()));
         }
     }
-
 }

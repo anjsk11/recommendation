@@ -47,4 +47,10 @@ public class Place {
     @OneToMany(mappedBy = "place")
     private Set<Review> reviews = new HashSet<>();
 
+    @Column(nullable = false)
+    private Integer heatmapx;
+
+    @Column(nullable = false)
+    private Integer heatmapy;
+
 }

@@ -1,10 +1,10 @@
 package com.sensingbros.recommendation.util;
 
 public class HeatmapUtils {
-    private static final double MIN_LAT = 0.0;
-    private static final double MAX_LAT = 30.0;
-    private static final double MIN_LNG = 0.0;
-    private static final double MAX_LNG = 30.0;
+    private static final double MIN_LAT = 37.547231758;
+    private static final double MAX_LAT = 37.584029222;
+    private static final double MIN_LNG = 126.9672011486;
+    private static final double MAX_LNG = 127.006122361;
     private static final int GRID_SIZE = 30;
 
     public static int[] getGridIndex(double lat, double lng) {

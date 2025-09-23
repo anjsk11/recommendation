@@ -10,8 +10,10 @@ import com.sensingbros.recommendation.util.HeatmapUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.scheduling.annotation.Scheduled;
 import java.time.LocalTime;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -125,5 +127,28 @@ public class UsersService {
             }
         }
     }
+
+    @Scheduled(cron = "0 0 0 * * *") // 매일 0시 0분 0초
+    public void DecayHeatmap() {
+        List<Users> users = usersRepository.findAll();
+        for (Users user : users) {
+            Integer[][] morning = user.getMorningHeatmap();
+            Integer[][] noon = user.getNoonHeatmap();
+            Integer[][] night = user.getNightHeatmap();
+            for (int i = 0; i < 30; i++) {
+                for (int j = 0; j < 30; j++) {
+                    morning[i][j] = (int)(morning[i][j] * 0.9);
+                    noon[i][j] = (int)(noon[i][j] * 0.9);
+                    night[i][j] = (int)(night[i][j] * 0.9);
+                }
+            }
+            // 변경 사항 저장
+            user.setMorningHeatmap(morning);
+            user.setNoonHeatmap(noon);
+            user.setNightHeatmap(night);
+            usersRepository.save(user); // 변경 사항 DB 저장
+        }
+    }
+
 }
 
