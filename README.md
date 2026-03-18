@@ -30,7 +30,7 @@
 ---
 
 ## 프로젝트 DB ERD
-
+<img width="1811" height="622" alt="ERD" src="https://github.com/user-attachments/assets/032cee98-0239-45bd-8e23-96a3e8e78903" />
 
 ---
 
