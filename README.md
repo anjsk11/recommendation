@@ -29,6 +29,11 @@
 
 ---
 
+## 프로젝트 DB ERD
+
+
+---
+
 ## ✨ 핵심 추천 알고리즘
 
 <img width="486" height="1055" alt="algorithm_flow" src="https://github.com/user-attachments/assets/f2532471-15cb-4333-a064-20cdd1835d4a" />
