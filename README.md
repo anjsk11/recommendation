@@ -1,3 +1,4 @@
+
 # 📍 위치 데이터 기반 장소 추천 플랫폼 — 백엔드
 
 > 졸업 캡스톤 프로젝트 (팀: 강진호, 김강년, 김준태, 박이준, 백재원, 최재원)
@@ -16,8 +17,7 @@
 
 ## 🏗 시스템 아키텍처
 
-<img width="1050" height="708" alt="architecture" src="https://github.com/user-attachments/assets/abf4e079-7cb5-4536-a979-92071cb89dc8" />
-
+<img width="3675" height="1725" alt="KakaoTalk_20260318_220420497" src="https://github.com/user-attachments/assets/79c77c02-06e0-43c0-b3e4-9bfed7d75be1" />
 
 | 구성 요소 | 역할 |
 |-----------|------|
@@ -45,7 +45,6 @@
 ### 2. 협업 필터링 점수 (Flask AI 서버)
 - 사용자가 리뷰를 남긴 장소 ID 목록을 Flask 서버로 전송
 - Yelp 오픈 데이터셋 기반 Matrix Factorization(ALS/SGD) 모델이 유사 사용자의 선호를 분석해 점수 반환
-- User-based CF / Item-based CF 성능 비교 후 우수한 방식 채택
 
 ### 3. 점수 합산 및 Top-20 반환
 ```
@@ -64,9 +63,7 @@
 | Database | PostgreSQL (AWS RDS) |
 | ORM | Spring Data JPA / Hibernate |
 | 인증 | AWS Cognito (JWT / OAuth2 Resource Server) |
-| AI 서버 연동 | REST (Flask EC2 서버 호출) |
 | 클라우드 | AWS EC2, RDS, Cognito |
-| 기타 | Lombok, ModelMapper, WebFlux |
 
 ---
 
@@ -116,42 +113,9 @@ src/main/java/com/sensingbros/recommendation/
 
 ---
 
-## ⚙️ 로컬 실행 방법
-
-### 1. 사전 요구사항
-- Java 21
-- PostgreSQL 실행 중
-- AWS Cognito User Pool 준비
-
-### 2. `application.properties` 설정
-
-`src/main/resources/application.properties.example`을 복사해 실제 값을 입력하세요.
-
-```properties
-# DB
-spring.datasource.url=jdbc:postgresql://localhost:5432/postgres
-spring.datasource.username=your_db_user
-spring.datasource.password=your_db_password
-
-# Cognito
-cognito.region=ap-northeast-2
-cognito.userPoolId=your_user_pool_id
-```
-
-> ⚠️ `application.properties`는 `.gitignore`에 포함하여 실제 값을 커밋하지 마세요.
-
-### 3. 빌드 및 실행
-
-```bash
-./mvnw spring-boot:run
-```
-
----
-
 ## 📊 성능 평가
 
 - **협업 필터링**: Yelp 데이터셋 기반, Leave-One-Out 방식으로 분할, RMSE / MAE / Hit Rate@N / NDCG 지표로 평가
-- **위치 기반 추천**: 6명 참가자 4주간 실사용, 추천 장소와 실제 동선 간 거리 평균 및 5점 만족도 설문으로 평가
 
 ---
 
@@ -159,5 +123,5 @@ cognito.userPoolId=your_user_pool_id
 
 - 실시간 교통·날씨 외부 데이터 통합으로 추천 정밀도 향상
 - 시계열 예측 모델을 이용한 사전 추천 기능
-- IoT / UWB 기반 실내 위치 추천 시스템 확장
 - 콘텐츠 기반 필터링(KoBERT 리뷰 임베딩)과 협업 필터링을 결합한 하이브리드 모델
+
