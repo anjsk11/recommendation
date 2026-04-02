@@ -36,8 +36,7 @@
 
 ## ✨ 핵심 추천 알고리즘
 
-<img width="486" height="1055" alt="algorithm_flow" src="https://github.com/user-attachments/assets/f2532471-15cb-4333-a064-20cdd1835d4a" />
-
+<img width="1101" height="1560" alt="Blank diagram (1)" src="https://github.com/user-attachments/assets/8926a8f1-a833-4fff-b919-3bdf8c8e66c0" />
 
 추천은 두 가지 점수를 합산하는 **하이브리드 방식**으로 동작합니다.
 
