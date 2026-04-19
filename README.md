@@ -17,7 +17,7 @@
 
 ## 🏗 시스템 아키텍처
 
-<img width="3675" height="1725" alt="KakaoTalk_20260318_220420497" src="https://github.com/user-attachments/assets/79c77c02-06e0-43c0-b3e4-9bfed7d75be1" />
+<img width="1837" height="863" alt="KakaoTalk_20260318_220420497" src="https://github.com/user-attachments/assets/79c77c02-06e0-43c0-b3e4-9bfed7d75be1" />
 
 | 구성 요소 | 역할 |
 |-----------|------|
